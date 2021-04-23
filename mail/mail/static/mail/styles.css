@@ -1,0 +1,28 @@
+textarea {
+    min-height: 300px;
+}
+
+.read {
+    background-color: rgb(200, 200, 200);
+}
+
+.border {
+    padding-top: 1%;
+    padding-left: 2%;
+    padding-bottom: 2%;
+    font-weight: bold;
+}
+
+.read {
+    font-weight: normal;
+}
+
+.row {
+    text-decoration: none;
+    color: black;
+}
+
+.row:hover {
+    text-decoration: none;
+    color: black;
+}
