@@ -1,0 +1,42 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <br>
+    <div id="new-post" class="row justify-content-center">
+        <div class="form-group col-6">
+            <form action="{% url 'new_post' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <input class="form-control col-10" type="text" name="text" placeholder="Share your thoughts...">
+                    <input class="btn btn-primary" type=submit value="Post">                  
+                </div>
+            </form>
+        </div>  
+    </div>
+
+    <div id="profile-view">
+        <div class="card">
+            <div class="card-body text-center">
+                <h1 class="card-title"></h1>
+                <p id="num-followers" class="card-subtitle mb-2 text-muted"></p>
+                <p id="num-following" class="card-subtitle mb-2 text-muted"></p>
+                <button type="button" id="follow-button" class="btn btn-primary"></button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div id="posts-container"><div id="posts-view"></div></div>
+
+    <div>
+        <nav aria-label="Posts navigation">
+            <ul id="pages" class="pagination justify-content-end">
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
+{% endblock %}

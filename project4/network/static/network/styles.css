@@ -1,0 +1,61 @@
+i {
+    font-size: 1.1rem;
+    padding-bottom: 1%;
+}
+
+p[contenteditable=true] {
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 0px 0px 1px;
+    outline: 0px solid transparent;
+}
+
+.text-muted {
+    font-style: italic;
+    font-size: 0.8rem;
+}
+
+#profile-view .card {
+    border: none;
+}
+
+#profile-view .card-title {
+    font-weight: bold;
+}
+
+#profile-view p {
+    font-size: 1rem;
+}
+
+#profile-view button {
+    width: 10%;
+    margin-left: 45%;
+    margin-right: 35%;
+}
+
+#posts-container {
+    padding-left: 7%;
+    padding-right: 7%;
+}
+
+#posts-view .card {
+    padding-top: 1%;
+    padding-bottom: 0.5%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+#posts-view .card-title {
+    padding-left: 2%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#posts-view button {
+    padding-top: 0%;
+    padding-bottom: 0.8%;
+}
+
+#posts-view input {
+    resize: none;
+    overflow: hidden;
+    display: flex;
+}
