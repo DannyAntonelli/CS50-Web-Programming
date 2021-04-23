@@ -1,0 +1,48 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block body %}
+    <div class="card-columns">
+        {% for listing in listings %}
+            <a href="{% url 'listing' listing.id %}">
+                <div class="card listing">
+                    {% if listing.photo_url %}
+                        <img class="card-img-top" src="{{ listing.photo_url }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ listing.title }}</h5>
+                        <p class="card-text">
+                            {% if listing.description %}
+                                {{ listing.description }}
+                            {% else %}
+                                No description provided.
+                            {% endif %}
+                        </p>
+                        <p class="card-text">
+                            Starting price:
+                            {% if listing.starting_price %}
+                                ${{ listing.starting_price }}
+                            {% else %}
+                                No starting price provided
+                            {% endif %}
+                        </p>
+                        <p class="card-text">
+                            Current offer: 
+                            {% if listing.current_offer %}
+                                ${{ listing.current_offer }}
+                            {% else %}
+                                No offers yet
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-muted">{{ listing.date }}</small>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends "auctions/layout.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+    {{ listing.title }}
+{% endblock %}
+
+{% block body %}
+
+    {% if valid_offer == True %}
+        <div class="alert alert-success" role="alert">
+            Bid placed succesfully!
+        </div>
+    {% elif valid_offer == False %}
+        <div class="alert alert-danger" role="alert">
+            Invalid bid!
+        </div>
+    {% endif %}
+
+    <br>
+    <div class="card-deck">
+        <div class="card container">
+            {% if listing.photo_url %}
+                <img id="photo" class="card-img-top" src="{{ listing.photo_url }}">
+            {% else %}
+                <p class="card-text missing">No image provided.</p>
+            {% endif %}
+        </div>
+        <div class="card container">
+
+            <h5 class="card_title">
+                {{ listing.title }}
+                {% if  listing.seller == user and not listing.expired %}
+                    <a class="btn btn-danger" href="{% url 'close_listing' listing.id %}" role="button">Close</a>
+                {% elif user in watchers %}
+                    <a class="btn btn-warning" href="{% url 'update_watchlist' listing.id %}" role="button">Remove from watchlist</a>
+                {% else %}
+                    <a class="btn btn-warning" href="{% url 'update_watchlist' listing.id %}" role="button">Add to the watchlist</a>
+                {% endif %}
+            </h5>
+
+            {% if not listing.expired %}
+                <p>
+                    Starting price:
+                    {% if listing.starting_price %}
+                        ${{ listing.starting_price }}
+                    {% else %}
+                        No starting price provided
+                    {% endif %}
+                </p>
+                <p>
+                    Current offer: 
+                    {% if listing.current_offer %}
+                        ${{ listing.current_offer }}
+                    {% else %}
+                        No offers yet
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            <p>Listed by: {{ listing.seller }}</p>
+            <p>Category: {% if listing.category %}{{ listing.category }}{% else %}No Category Listed{% endif %}</p>
+
+            {% if listing.description %}
+                <p class="card-text">{{ listing.description }}</p>
+            {% else %}
+                <p class="card-text missing">No description provided.</p>
+            {% endif %}
+
+            {% if listing.seller != user and not listing.expired %}
+            <form action="{% url 'new_bid' listing.id %}" method="post">
+                {% csrf_token %}
+                {{ bid_form.offer }}
+                <input class="btn btn-success" type = submit value="Place Bid">
+            </form>
+            {% elif listing.expired and listing.buyer == user %}
+                <p>Congratulations! You have won this auction.</p>
+            {% elif listing.expired and listing.buyer != user %}
+                <p>Auction won by {{ listing.buyer }}.</p>
+            {% endif %}
+            
+
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            Comments
+        </div>
+
+        <div class="card-body">
+            <div id="comment" class="form-group">
+                <form action="{% url 'comment' listing.id %}" method="post">
+                    {% csrf_token %}
+                    {{ comment_form.text }}        
+                    <input class="btn btn-success" type="submit" value="Comment">
+                </form>                    
+            </div>
+            <br>
+
+            {% for comment in comments %}
+                <div class="card container col-12">
+                    <h6>{{ comment.user}} @ {{ comment.date }}</h6>
+                    <p>{{ comment.text }}</p>
+                </div>
+                <br>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
